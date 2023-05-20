@@ -1,3 +1,5 @@
+'use client';
+
 interface NavbarProps { }
 
 const Navbar: React.FC<NavbarProps> = ({ }) => {
@@ -8,8 +10,8 @@ const Navbar: React.FC<NavbarProps> = ({ }) => {
             </div>
 
             <div className="navbar-end">
-                <a className="btn mr-2">Sign up</a>
-                <a className="btn">Sign in</a>
+                <label className="btn mr-2" htmlFor="modal-register">Sign up</label>
+                <label className="btn" htmlFor="modal-login">Sign in</label>
             </div>
         </div>
     );
