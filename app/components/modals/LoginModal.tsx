@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signIn } from 'next-auth/react';
 import {
@@ -14,10 +14,11 @@ import { useRouter } from "next/navigation";
 import Modal from "./Modal";
 import Input from "../inputs/Input";
 import Button from "../Button";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const LoginModal = () => {
-  const modalId = 'modal-login';
   const router = useRouter();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -79,8 +80,7 @@ const LoginModal = () => {
   )
 
   const footerContent = (
-    <div className="flex flex-col gap-4 mt-3">
-      <hr />
+    <div className="flex flex-col gap-4">
       <Button
         outline
         label="Continue with Google"
@@ -92,7 +92,8 @@ const LoginModal = () => {
 
   return (
     <Modal
-      modalId={modalId}
+      onClose={loginModal.onClose}
+      isOpen={loginModal.isOpen}
       disabled={isLoading}
       title="Login"
       onSubmit={handleSubmit(onSubmit)}

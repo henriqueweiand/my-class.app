@@ -9,10 +9,12 @@ import toast from "react-hot-toast";
 import Input from "../inputs/Input";
 import Modal from "./Modal";
 import Button from "../Button";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const RegisterModal = () => {
   const modalId = 'modal-register';
 
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -91,7 +93,8 @@ const RegisterModal = () => {
     <>
       <input type="checkbox" id={modalId} className="modal-toggle" />
       <Modal
-        modalId={modalId}
+        onClose={registerModal.onClose}
+        isOpen={registerModal.isOpen}
         title={"Sign up"}
         body={bodyContent}
         footer={footerContent}
