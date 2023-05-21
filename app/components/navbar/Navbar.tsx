@@ -1,5 +1,3 @@
-'use client';
-
 interface NavbarProps { }
 
 const Navbar: React.FC<NavbarProps> = ({ }) => {

@@ -22,8 +22,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dark">
-      <ModalsProvider />
-      <body className={font.className}>
+      <body className={font.className} suppressHydrationWarning={true}>
+        <ModalsProvider />
         <ClientOnly>
           <ToasterProvider />
           <Navbar />
