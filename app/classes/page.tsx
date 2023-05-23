@@ -2,7 +2,6 @@
 import ClientOnly from "@/app/components/ClientOnly";
 import getClasses from "../actions/getClasses";
 import getCurrentUser from "../actions/getCurrentUser";
-import { SafeClasses } from "../types";
 import ClassesClient from "./ClassesClient";
 
 const CreatePage = async () => {

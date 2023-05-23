@@ -10,6 +10,7 @@ interface CardClass {
     classLength?: number;
     timezone?: string;
     owner?: string;
+    onClick: (id: string) => void
 }
 
 const CardClass: React.FC<CardClass> = ({
@@ -22,9 +23,10 @@ const CardClass: React.FC<CardClass> = ({
     classLength,
     timezone,
     owner,
+    onClick
 }) => {
     return (
-        <div className="card group bg-base-100 shadow-xl">
+        <div onClick={() => onClick(id)} className="card group bg-base-100 shadow-xl">
             <div className="card-body">
                 <h2 className="card-title">
                     {title}

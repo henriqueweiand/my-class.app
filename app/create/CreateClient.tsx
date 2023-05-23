@@ -26,8 +26,8 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
       category: 'education',
       classLength: 6,
       timezone: 'UTF-8',
-      startDate: '2023-05-22T00:46:00.000Z',
-      endDate: '2023-05-22T23:46:06.055Z'
+      startDate: '2023-05-24T12:46:00.000Z',
+      endDate: '2023-05-24T16:46:06.055Z'
     })
       .then((data) => {
         console.log(data.data.eventId);
