@@ -25,10 +25,6 @@ const ClassClient: React.FC<ClassesClientProps> = ({ schedule }) => {
 
   return (
     <Container>
-      {
-        JSON.stringify(schedule)
-      }
-
       <Button
         label="Enroll"
         onClick={() => onUpdate()}
