@@ -18,7 +18,7 @@ const CreatePage = async () => {
 
   return (
     <ClientOnly>
-      <ClassesClient classes={classes} currentUser={currentUser} />
+      <ClassesClient classes={classes} />
     </ClientOnly>
   );
 }

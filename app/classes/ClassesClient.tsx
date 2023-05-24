@@ -1,9 +1,9 @@
 'use client';
 
-import { SafeClasses } from "@/app/types";
-import { useRouter } from "next/navigation";
+import { SafeClasses, SafeUser } from "@/app/types";
 import Container from "../components/Container";
 import CardClass from "../components/cardClass/CardClass";
+import { useRouter } from "next/navigation";
 
 interface ClassesClientProps {
   classes?: SafeClasses[];
