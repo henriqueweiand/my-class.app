@@ -41,7 +41,7 @@ export async function POST(
     conferenceDataVersion: 1,
     requestBody: {
       summary: `meeting`,
-      description: 'description',
+      description: description,
       start: {
         dateTime: startDate,
       },
@@ -61,7 +61,7 @@ export async function POST(
     },
   })
 
-  const classroom = await prisma.classes.create({
+  const classroom = await prisma.schedule.create({
     data: {
       title,
       description,

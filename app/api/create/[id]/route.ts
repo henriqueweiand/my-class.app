@@ -35,13 +35,13 @@ export async function PUT(
       eventId: schedule.eventId,
       requestBody: {
         attendees: [
-          // ...schedule.students,
+          // ...schedule.Student,
           { email: currentUser.email }
         ],
       },
     })
 
-    await prisma.students.create({
+    await prisma.student.create({
       data: {
         userId: currentUser.id,
         classesId: schedule.id

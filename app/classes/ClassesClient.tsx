@@ -1,12 +1,12 @@
 'use client';
 
-import { SafeClasses, SafeUser } from "@/app/types";
+import { SafeSchedule } from "@/app/types";
 import Container from "../components/Container";
 import CardClass from "../components/cardClass/CardClass";
 import { useRouter } from "next/navigation";
 
 interface ClassesClientProps {
-  classes?: SafeClasses[];
+  classes?: SafeSchedule[];
 }
 
 const ClassesClient: React.FC<ClassesClientProps> = ({

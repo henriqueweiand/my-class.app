@@ -1,4 +1,4 @@
-import { Classes, User } from "@prisma/client";
+import { Schedule, User } from "@prisma/client";
 
 export type SafeUser = Omit<
   User,
@@ -9,8 +9,8 @@ export type SafeUser = Omit<
   emailVerified: string | null;
 };
 
-export type SafeClasses = Omit<
-  Classes,
+export type SafeSchedule = Omit<
+  Schedule,
   "createdAt" | "startDate" | "endDate"
 > & {
   createdAt: string;

@@ -21,8 +21,8 @@ model User {
   updatedAt      DateTime  @updatedAt
 
   accounts Account[]
-  classes  Classes[]
-  Students Students[]
+  classes  Schedule[]
+  Student Student[]
 }
 
 model Account {
@@ -44,7 +44,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Classes {
+model Schedule {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
@@ -58,14 +58,14 @@ model Classes {
   userId      String   @db.ObjectId
 
   user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Students Students[]
+  Student Student[]
 }
 
-model Students {
+model Student {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   userId    String @db.ObjectId
   classesId String @db.ObjectId
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  classes Classes @relation(fields: [classesId], references: [id], onDelete: Cascade)
+  classes Schedule @relation(fields: [classesId], references: [id], onDelete: Cascade)
 }
