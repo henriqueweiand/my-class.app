@@ -57,6 +57,7 @@ export async function POST(
         },
       },
       guestsCanSeeOtherGuests: false,
+      guestsCanModify: false,
     },
   })
 

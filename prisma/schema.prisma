@@ -11,33 +11,33 @@ datasource db {
 }
 
 model User {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?   @unique
-  emailVerified   DateTime?
-  image           String?
-  hashedPassword  String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  favoriteIds     String[] @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   accounts Account[]
-  classes Classes[]
+  classes  Classes[]
+  Students Students[]
 }
 
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.String
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -45,17 +45,27 @@ model Account {
 }
 
 model Classes {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
   description String
-  createdAt DateTime @default(now())
-  startDate DateTime
-  endDate DateTime
-  category  String
+  createdAt   DateTime @default(now())
+  startDate   DateTime
+  endDate     DateTime
+  category    String
   classLength Int
-  timezone String
-  eventId String
-  userId String @db.ObjectId
-  
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timezone    String
+  eventId     String
+  userId      String   @db.ObjectId
+
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Students Students[]
+}
+
+model Students {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  classesId String @db.ObjectId
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes Classes @relation(fields: [classesId], references: [id], onDelete: Cascade)
 }

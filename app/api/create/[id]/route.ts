@@ -4,6 +4,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { getGoogleOAuthToken } from "@/app/actions/getGoogleOAuthToken";
 import { google } from "googleapis";
 import getSchedule from "@/app/actions/getSchedule";
+import prisma from "@/app/libs/prismadb";
 
 interface IParams {
   id: string;
@@ -14,31 +15,42 @@ export async function PUT(
   { params }: { params: IParams }
 ) {
 
-  const { id } = params;
-  const currentUser = await getCurrentUser();
-  const schedule = await getSchedule({ id })
+  try {
+    const { id } = params;
+    const currentUser = await getCurrentUser();
+    const schedule = await getSchedule({ id })
 
-  if (!currentUser || !schedule) {
-    return NextResponse.error();
+    if (!currentUser || !schedule) {
+      return NextResponse.error();
+    }
+
+    const calendar = google.calendar({
+      version: 'v3',
+      auth: await getGoogleOAuthToken(schedule.userId),
+    })
+
+    const updatedCallendar = await calendar.events.patch({
+      calendarId: 'primary',
+      conferenceDataVersion: 1,
+      eventId: schedule.eventId,
+      requestBody: {
+        attendees: [
+          // ...schedule.students,
+          { email: currentUser.email }
+        ],
+      },
+    })
+
+    await prisma.students.create({
+      data: {
+        userId: currentUser.id,
+        classesId: schedule.id
+      }
+    });
+
+    return NextResponse.json(updatedCallendar);
+  } catch (error) {
+    throw new Error();
   }
 
-  const calendar = google.calendar({
-    version: 'v3',
-    auth: await getGoogleOAuthToken(schedule.userId), // 646c0343fe04c0e92b2b6447
-  })
-
-  const updatedCallendar = await calendar.events.patch({
-    calendarId: 'primary',
-    conferenceDataVersion: 1,
-    eventId: schedule.eventId,
-    requestBody: {
-      attendees: [
-        // ...schedule.students,
-        { email: currentUser.email }
-      ],
-    },
-  })
-
-  return NextResponse.json(updatedCallendar);
-  // return NextResponse.json({});
 }
