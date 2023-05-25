@@ -10,7 +10,7 @@ export default async function getSchedule(
   try {
     const { id } = params;
 
-    const schedule = await prisma.classes.findUnique({
+    const schedule = await prisma.schedule.findUnique({
       where: {
         id,
       },

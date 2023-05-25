@@ -23,7 +23,7 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
   currentUser
 }) => {
   const router = useRouter();
-  const [studentsCount, setStudentsCount] = useState(1);
+  const [StudentCount, setStudentCount] = useState(1);
   const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<TimeSelectValue>();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +63,7 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
       title: data.title,
       description: data.description,
       category: data.category,
-      classLength: studentsCount,
+      classLength: StudentCount,
       timezone: 'UTF-8',
       startDate: schedulingDate.format(),
       endDate: schedulingDate.add(1, 'hour').format(),
@@ -112,10 +112,10 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
       />
 
       <Counter
-        onChange={setStudentsCount}
-        value={studentsCount}
-        title="Students"
-        subtitle="How many students"
+        onChange={setStudentCount}
+        value={StudentCount}
+        title="Student"
+        subtitle="How many Student"
       />
 
       <TimeSelect

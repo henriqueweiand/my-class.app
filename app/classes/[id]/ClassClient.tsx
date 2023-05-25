@@ -2,14 +2,14 @@
 
 import Button from "@/app/components/Button";
 import Container from "@/app/components/Container";
-import { SafeClasses, SafeUser } from "@/app/types";
+import { SafeSchedule, SafeUser } from "@/app/types";
 import axios from "axios";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 
 interface ClassesClientProps {
   currentUser: SafeUser,
-  schedule: SafeClasses;
+  schedule: SafeSchedule;
 }
 
 const ClassClient: React.FC<ClassesClientProps> = ({ schedule }) => {
