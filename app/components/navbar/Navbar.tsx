@@ -11,7 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     return (
         <div className="navbar bg-base-200">
             <div className="navbar-start">
-                <a className="btn btn-ghost normal-case text-xl">My class</a>
+                <h1 className="btn btn-ghost normal-case text-xl">My class</h1>
             </div>
 
             <UserMenu currentUser={currentUser} />
