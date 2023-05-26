@@ -7,7 +7,7 @@ import { SafeSchedule, SafeUser } from "@/app/types";
 
 interface IUseEnroll {
   schedule: SafeSchedule;
-  currentUser?: SafeUser;
+  currentUser: SafeUser;
 }
 
 const useEnroll = ({ schedule, currentUser }: IUseEnroll) => {
