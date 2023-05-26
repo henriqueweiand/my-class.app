@@ -28,7 +28,7 @@ export default async function getSchedule(
     const safeSchedule = {
       ...schedule,
       teacher: {
-        name: schedule.teacher.name,
+        name: schedule.teacher.name || '',
       },
       students: schedule.student,
       createdAt: schedule.createdAt.toISOString(),
