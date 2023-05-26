@@ -59,7 +59,7 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
     const schedulingDate = dayjs(dateFormated).set('hour', time.value);
 
 
-    axios.post(`/api/create`, {
+    axios.post(`/api/schedule`, {
       title: data.title,
       description: data.description,
       category: data.category,

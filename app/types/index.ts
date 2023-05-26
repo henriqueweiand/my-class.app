@@ -1,4 +1,4 @@
-import { Schedule, User } from "@prisma/client";
+import { Schedule, Student, User } from "@prisma/client";
 
 export type SafeUser = Omit<
   User,
@@ -16,4 +16,8 @@ export type SafeSchedule = Omit<
   createdAt: string;
   startDate: string;
   endDate: string;
+  teacher: {
+    name: string;
+  }
+  students: Student[]
 };
