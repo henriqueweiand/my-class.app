@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { google } from "googleapis";
-import { getGoogleOAuthToken } from "@/app/actions/getGoogleOAuthToken";
+import { getGoogleOAuthToken } from "@/app/actions/google/getGoogleOAuthToken";
 
 export async function POST(
   request: Request,

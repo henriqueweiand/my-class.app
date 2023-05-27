@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { getGoogleOAuthToken } from "@/app/actions/getGoogleOAuthToken";
+import { getGoogleOAuthToken } from "@/app/actions/google/getGoogleOAuthToken";
 import { google } from "googleapis";
 import getSchedule from "@/app/actions/getSchedule";
 import prisma from "@/app/libs/prismadb";
@@ -33,31 +33,34 @@ export async function PUT(
       eventId: schedule.eventId,
     });
 
-    const existingAttendees = event.data.attendees || [];
-    const newAttendees = [
-      { email: currentUser.email },
-    ];
+    console.log(event.data.status);
 
-    const updatedAttendees = existingAttendees.concat(newAttendees);
+    // const existingAttendees = event.data.attendees || [];
+    // const newAttendees = [
+    //   { email: currentUser.email },
+    // ];
 
-    event.data.attendees = updatedAttendees;
+    // const updatedAttendees = existingAttendees.concat(newAttendees);
 
-    const updatedCallendar = await calendar.events.patch({
-      calendarId: 'primary',
-      conferenceDataVersion: 1,
-      eventId: schedule.eventId,
-      sendUpdates: 'none',
-      requestBody: event.data,
-    })
+    // event.data.attendees = updatedAttendees;
 
-    await prisma.student.create({
-      data: {
-        userId: currentUser.id,
-        scheduleId: schedule.id
-      }
-    });
+    // const updatedCallendar = await calendar.events.patch({
+    //   calendarId: 'primary',
+    //   conferenceDataVersion: 1,
+    //   eventId: schedule.eventId,
+    //   sendUpdates: 'none',
+    //   requestBody: event.data,
+    // })
 
-    return NextResponse.json(updatedCallendar);
+    // await prisma.student.create({
+    //   data: {
+    //     userId: currentUser.id,
+    //     scheduleId: schedule.idhttps://www.youtube.com/watch?v=5IfuDxHEWr8
+    //   }
+    // });
+
+    // return NextResponse.json(updatedCallendar);
+    return NextResponse.json({});
   } catch (error) {
     throw new Error();
   }
