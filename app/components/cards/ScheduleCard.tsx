@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { SafeSchedule } from "@/app/types";
 import Link from "next/link";
 
@@ -15,12 +14,12 @@ const ScheduleCard: React.FC<ScheduleCard> = ({
     category,
     teacher: { name },
     startDate,
-    students,
     href
 }) => {
     return (
         <Link href={href}>
-            <article className="card group bg-base-100 shadow-xl">
+            <article className="card group bg-base-100 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out">
+
                 <div className="card-body">
                     <section>
                         <h2 className="card-title">
@@ -36,23 +35,6 @@ const ScheduleCard: React.FC<ScheduleCard> = ({
                         ) : (
                             <p>{description}</p>
                         )}
-                    </section>
-
-                    <section className="avatar-group -space-x-6">
-                        {
-                            !!students && students.map((student) => (
-                                <div className="avatar" key={student.id}>
-                                    <div className="w-8">
-                                        <Image
-                                            src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                                            width={100}
-                                            height={100}
-                                            alt="Picture of the author"
-                                        />
-                                    </div>
-                                </div>
-                            ))
-                        }
                     </section>
                 </div>
             </article>
