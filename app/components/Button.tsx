@@ -6,6 +6,7 @@ interface ButtonProps {
   label: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
+  loading?: boolean;
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
@@ -14,6 +15,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   label,
   onClick,
+  loading = false,
   disabled,
   icon: Icon,
   outline,
@@ -25,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       className={`
         btn
         ${outline ? 'btn-outline' : ''}
+        ${loading ? 'loading' : ''}
         gap-2
       `}
     >

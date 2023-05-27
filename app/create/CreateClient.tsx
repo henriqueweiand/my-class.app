@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { SafeUser } from "@/app/types";
@@ -36,9 +36,9 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
     },
   } = useForm<FieldValues>({
     defaultValues: {
-      title: 'aa',
-      description: 'ss',
-      category: 'aa',
+      title: '',
+      description: '',
+      category: '',
     },
   });
 
@@ -58,7 +58,6 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
     const dateFormated = date;
     const schedulingDate = dayjs(dateFormated).set('hour', time.value);
 
-
     axios.post(`/api/schedule`, {
       title: data.title,
       description: data.description,
@@ -67,12 +66,10 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
       timezone: 'UTF-8',
       startDate: schedulingDate.format(),
       endDate: schedulingDate.add(1, 'hour').format(),
-      // startDate: '2023-05-24T12:46:00.000Z',
-      // endDate: '2023-05-24T16:46:06.055Z'
     })
       .then((data) => {
         toast.success('Callendar created');
-        router.refresh();
+        router.push('/meetings');
       })
       .catch(() => {
         toast.error('Something went wrong.')
@@ -133,6 +130,7 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
 
   const cardFooter = (
     <Button
+      loading={isLoading}
       label="Create"
       onClick={handleSubmit(onSubmit)}
     />
