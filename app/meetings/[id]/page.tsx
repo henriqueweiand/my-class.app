@@ -2,7 +2,7 @@
 import getCurrentUser from "@/app/actions/user/getCurrentUser";
 import getSchedule from "@/app/actions/schedule/getSchedule";
 import ClientOnly from "@/app/components/ClientOnly";
-import ClassClient from "./ClassClient";
+import MeetingClient from "./MeetingClient";
 
 interface IParams {
   id?: string;
@@ -23,7 +23,7 @@ const CreatePage = async ({ params }: { params: IParams }) => {
   return (
     <ClientOnly>
       {
-        schedule && <ClassClient currentUser={currentUser} schedule={schedule} />
+        schedule && <MeetingClient currentUser={currentUser} schedule={schedule} />
       }
     </ClientOnly>
   );

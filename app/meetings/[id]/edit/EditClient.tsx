@@ -70,7 +70,7 @@ const EditClient: React.FC<ReservationsClientProps> = ({
     const dateFormated = date;
     const schedulingDate = dayjs(dateFormated).set('hour', time.value);
 
-    axios.post(`/api/schedule`, {
+    axios.put(`/api/schedule/${schedule.id}`, {
       title: data.title,
       description: data.description,
       category: data.category,
