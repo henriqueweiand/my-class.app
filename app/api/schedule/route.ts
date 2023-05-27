@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
+import getCurrentUser from "@/app/actions/user/getCurrentUser";
+import { createAgenda } from "@/app/actions/google/createAgenda";
+import { getGoogleOAuthToken } from "@/app/actions/google/getGoogleOAuthToken";
 import prisma from "@/app/libs/prismadb";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import { google } from "googleapis";
-import { getGoogleOAuthToken } from "@/app/actions/getGoogleOAuthToken";
 
 export async function POST(
   request: Request,
@@ -31,37 +31,20 @@ export async function POST(
     }
   });
 
-  const calendar = google.calendar({
-    version: 'v3',
-    auth: await getGoogleOAuthToken(currentUser.id),
-  })
-
-  const createdEvent = await calendar.events.insert({
-    calendarId: 'primary',
-    conferenceDataVersion: 1,
-    requestBody: {
-      summary: `meeting`,
+  const { event } = await createAgenda({
+    eventData: {
       description: description,
-      start: {
-        dateTime: startDate,
-      },
-      end: {
-        dateTime: endDate,
-      },
-      conferenceData: {
-        createRequest: {
-          requestId: '12312312312i',
-          conferenceSolutionKey: {
-            type: 'hangoutsMeet',
-          },
-        },
-      },
-      guestsCanSeeOtherGuests: false,
-      guestsCanModify: false,
+      startDate,
+      endDate
     },
+    googleUserAuth: await getGoogleOAuthToken(currentUser.id)
   })
 
-  const classroom = await prisma.schedule.create({
+  if (!event) {
+    return NextResponse.error();
+  }
+
+  await prisma.schedule.create({
     data: {
       title,
       description,
@@ -70,10 +53,10 @@ export async function POST(
       category,
       classLength,
       timezone,
-      eventId: createdEvent.data.id as string,
+      eventId: event.data.id as string,
       userId: currentUser.id
     }
   });
 
-  return NextResponse.json(classroom);
+  return NextResponse.json({});
 }
