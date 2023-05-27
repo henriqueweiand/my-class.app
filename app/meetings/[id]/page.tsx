@@ -1,6 +1,6 @@
 
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import getSchedule from "@/app/actions/getSchedule";
+import getCurrentUser from "@/app/actions/user/getCurrentUser";
+import getSchedule from "@/app/actions/schedule/getSchedule";
 import ClientOnly from "@/app/components/ClientOnly";
 import ClassClient from "./ClassClient";
 

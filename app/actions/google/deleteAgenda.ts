@@ -17,13 +17,11 @@ export const deleteAgenda = async ({ eventId, googleUserAuth }: deleteAgendaProp
         eventId: eventId,
     })
 
+    // ## Todo - guarantee all students are going to be deleted in cascade
+
     if (!event) {
-        return {
-            event: null,
-        }
+        return false
     }
 
-    return {
-        event,
-    };
+    return true;
 }

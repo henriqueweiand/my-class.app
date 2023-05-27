@@ -5,6 +5,8 @@ import Container from "@/app/components/Container";
 import useEnroll from "@/app/hooks/useEnroll";
 import { SafeSchedule, SafeUser } from "@/app/types";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 interface ClassesClientProps {
   currentUser: SafeUser,

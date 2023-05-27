@@ -1,7 +1,7 @@
 
 import ClientOnly from "@/app/components/ClientOnly";
-import getSchedules from "../actions/getSchedules";
-import getCurrentUser from "../actions/getCurrentUser";
+import getSchedules from "../actions/schedule/getSchedules";
+import getCurrentUser from "../actions/user/getCurrentUser";
 import ClassesClient from "./ClassesClient";
 
 const CreatePage = async () => {

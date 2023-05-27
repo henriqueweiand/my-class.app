@@ -17,15 +17,5 @@ export const getAgenda = async ({ eventId, googleUserAuth }: getAgendaProps) => 
         eventId: eventId,
     });
 
-    if (!event) {
-        return {
-            event: null,
-            status: 'notFound'
-        }
-    }
-
-    return {
-        event,
-        status: event.data.status
-    };
+    return event;
 }

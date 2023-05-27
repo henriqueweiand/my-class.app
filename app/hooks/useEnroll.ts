@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { SafeSchedule, SafeUser } from "@/app/types";
@@ -28,25 +28,28 @@ const useEnroll = ({ schedule, currentUser }: IUseEnroll) => {
         request = () => axios.put(`/api/schedule/${schedule.id}`);
       }
 
-      await request().finally(() => {
-        setIsLoading(false);
-      });
+      await request()
+        .finally(() => {
+          setIsLoading(false);
+        });
+
       router.refresh();
       toast.success('Success');
     } catch (error) {
       setIsLoading(false);
       toast.error('Something went wrong.');
+      router.push('/meetings');
     }
   },
     [
       isStudent,
       schedule,
-      router
+      router,
     ]);
 
   return {
     toggleEnroll,
-    isLoading
+    isLoading,
   }
 }
 

@@ -6,7 +6,7 @@ import ClientOnly from './components/ClientOnly';
 import Navbar from './components/navbar/Navbar';
 import ToasterProvider from './providers/ToasterProvider';
 import ModalsProvider from './providers/ModalsProvider';
-import getCurrentUser from './actions/getCurrentUser';
+import getCurrentUser from './actions/user/getCurrentUser';
 
 export const metadata = {
   title: 'my-class.app',

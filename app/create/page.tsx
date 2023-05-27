@@ -1,6 +1,6 @@
 
 import ClientOnly from "@/app/components/ClientOnly";
-import getCurrentUser from "../actions/getCurrentUser";
+import getCurrentUser from "../actions/user/getCurrentUser";
 import CreateClient from "./CreateClient";
 
 const CreatePage = async () => {
