@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -12,40 +12,43 @@ import dayjs from "dayjs";
 import Button from "@/app/components/Button";
 import DatePicker from "@/app/components/inputs/Calendar";
 import Counter from "@/app/components/inputs/Counter";
-import TimeSelect, { TimeSelectValue } from "@/app/components/inputs/TimeSelect";
+import TimeSelect, {
+  TimeSelectValue,
+} from "@/app/components/inputs/TimeSelect";
 import Input from "@/app/components/inputs/Input";
 
 interface ReservationsClientProps {
-  currentUser: SafeUser,
-  schedule: SafeSchedule,
+  currentUser: SafeUser;
+  schedule: SafeSchedule;
 }
 
 const EditClient: React.FC<ReservationsClientProps> = ({
   currentUser,
-  schedule
+  schedule,
 }) => {
   const dateTemp = dayjs(schedule.startDate);
 
   const getTimeSelectValue = (hours: number): TimeSelectValue => {
-    const label = `${hours.toString().padStart(2, '0')}:00`;
+    const label = `${hours.toString().padStart(2, "0")}:00`;
     return {
       label,
-      value: hours
+      value: hours,
     };
-  }
+  };
 
   const router = useRouter();
   const [StudentCount, setStudentCount] = useState(schedule.classLength);
   const [date, setDate] = useState<Date>(dateTemp.toDate());
-  const [time, setTime] = useState<TimeSelectValue>(getTimeSelectValue(dateTemp.get('hour')));
-  const [isLoading, setIsLoading] = useState(false);
+  const [time, setTime] = useState<TimeSelectValue>(
+    getTimeSelectValue(dateTemp.get("hour"))
+  );
+  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: {
-      errors
-    },
+    formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
       title: schedule.title,
@@ -56,36 +59,53 @@ const EditClient: React.FC<ReservationsClientProps> = ({
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!date) {
-      toast.error('Inform a date');
+      toast.error("Inform a date");
       return;
     }
 
     if (!time) {
-      toast.error('Inform a time');
+      toast.error("Inform a time");
       return;
     }
 
-    setIsLoading(true);
+    setIsLoadingUpdate(true);
 
     const dateFormated = date;
-    const schedulingDate = dayjs(dateFormated).set('hour', time.value);
+    const schedulingDate = dayjs(dateFormated).set("hour", time.value);
 
-    axios.put(`/api/schedule/${schedule.id}`, {
-      title: data.title,
-      description: data.description,
-      category: data.category,
-      classLength: StudentCount,
-      timezone: 'UTF-8',
-      startDate: schedulingDate.format(),
-      endDate: schedulingDate.add(1, 'hour').format(),
-    })
+    axios
+      .put(`/api/schedule/${schedule.id}`, {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        classLength: StudentCount,
+        timezone: "UTF-8",
+        startDate: schedulingDate.format(),
+        endDate: schedulingDate.add(1, "hour").format(),
+      })
       .then((data) => {
-        toast.success('Callendar created');
-        router.push('/meetings');
+        toast.success("Callendar updated");
+        router.push("/meetings");
       })
       .catch(() => {
-        toast.error('Something went wrong.')
+        toast.error("Something went wrong.");
+        setIsLoadingUpdate(false);
+      });
+  };
+
+  const handleDelete = () => {
+    setIsLoadingDelete(true);
+
+    axios
+      .delete(`/api/schedule/${schedule.id}`)
+      .then(() => {
+        toast.success("Callendar deleted");
+        router.push("/meetings");
       })
+      .catch(() => {
+        toast.error("Something went wrong.");
+        setIsLoadingDelete(false);
+      });
   };
 
   const cardBody = (
@@ -138,15 +158,23 @@ const EditClient: React.FC<ReservationsClientProps> = ({
         value={date}
       />
     </div>
-  )
+  );
 
   const cardFooter = (
-    <Button
-      loading={isLoading}
-      label="Create"
-      onClick={handleSubmit(onSubmit)}
-    />
-  )
+    <>
+      <Button
+        loading={isLoadingDelete}
+        label="Delete"
+        onClick={() => handleDelete()}
+      />
+
+      <Button
+        loading={isLoadingUpdate}
+        label="Update"
+        onClick={handleSubmit(onSubmit)}
+      />
+    </>
+  );
 
   return (
     <div className="card mt-4 max-w-lg mx-auto bg-base-100 shadow-xl">
@@ -154,12 +182,10 @@ const EditClient: React.FC<ReservationsClientProps> = ({
         <h2 className="card-title">Create a room!</h2>
         {cardBody}
 
-        <div className="card-actions justify-end">
-          {cardFooter}
-        </div>
+        <div className="card-actions justify-end">{cardFooter}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default EditClient;

@@ -4,6 +4,8 @@ import getSchedule from "@/app/actions/schedule/getSchedule";
 import getCurrentUser from "@/app/actions/user/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
+import { deleteAgenda } from "@/app/actions/google/deleteAgenda";
+import { deleteSchedule } from "@/app/actions/schedule/deleteSchedule";
 
 interface IParams {
   id: string;
@@ -43,6 +45,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
   const { event } = await updateAgenda({
     eventId: schedule?.eventId,
     eventData: {
+      summary: title,
       description: description,
       start: {
         dateTime: startDate,
@@ -72,6 +75,39 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       timezone,
     },
   });
+
+  return NextResponse.json({
+    status: 200,
+  });
+}
+
+interface IParams {
+  id: string;
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: IParams }
+) {
+  const { id } = params;
+
+  const currentUser = await getCurrentUser();
+  const schedule = await getSchedule({ id });
+
+  if (!currentUser || currentUser === null || !schedule || schedule === null) {
+    return NextResponse.error();
+  }
+
+  if (currentUser.id !== schedule?.userId) {
+    return NextResponse.error();
+  }
+
+  await deleteAgenda({
+    eventId: schedule.eventId,
+    googleUserAuth: await getGoogleOAuthToken(currentUser.id),
+  });
+
+  await deleteSchedule({ eventId: schedule.eventId });
 
   return NextResponse.json({
     status: 200,
