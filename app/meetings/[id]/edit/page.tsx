@@ -1,4 +1,3 @@
-
 import ClientOnly from "@/app/components/ClientOnly";
 import EditClient from "./EditClient";
 import getCurrentUser from "@/app/actions/user/getCurrentUser";
@@ -12,12 +11,8 @@ const EditPage = async ({ params }: { params: IParams }) => {
   const currentUser = await getCurrentUser();
   const schedule = await getSchedule(params);
 
-  if (!currentUser) {
-    return (
-      <ClientOnly>
-        Unauthorized, make login
-      </ClientOnly>
-    )
+  if (!currentUser || currentUser.id !== schedule?.userId) {
+    return <ClientOnly>Unauthorized, make login</ClientOnly>;
   }
 
   return (
@@ -25,6 +20,6 @@ const EditPage = async ({ params }: { params: IParams }) => {
       <EditClient currentUser={currentUser} schedule={schedule} />
     </ClientOnly>
   );
-}
+};
 
 export default EditPage;
