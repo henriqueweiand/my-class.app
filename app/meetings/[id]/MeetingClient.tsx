@@ -13,7 +13,7 @@ interface ClassesClientProps {
   schedule: SafeSchedule;
 }
 
-const ClassClient: React.FC<ClassesClientProps> = ({ schedule, currentUser }) => {
+const MeetingClient: React.FC<ClassesClientProps> = ({ schedule, currentUser }) => {
   const { isLoading, toggleEnroll } = useEnroll({ schedule, currentUser });
   const router = useRouter();
 
@@ -37,7 +37,7 @@ const ClassClient: React.FC<ClassesClientProps> = ({ schedule, currentUser }) =>
           <div className="flex-none">
             {currentUser.id === schedule.userId ? (
               <>
-                <Button disabled={isLoading} label="Edit class" onClick={() => router.push(`/classes/${schedule.id}/edit`)} />
+                <Button disabled={isLoading} label="Edit class" onClick={() => router.push(`/meetings/${schedule.id}/edit`)} />
               </>
             ) : (
               <>
@@ -65,4 +65,4 @@ const ClassClient: React.FC<ClassesClientProps> = ({ schedule, currentUser }) =>
   );
 }
 
-export default ClassClient;
+export default MeetingClient;

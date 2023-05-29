@@ -15,7 +15,8 @@ const useEnroll = ({ schedule, currentUser }: IUseEnroll) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isStudent = () => !!schedule.students.find((student) => student.userId === currentUser.id);
+  const isStudent = () =>
+    !!schedule.students.find((student) => student.userId === currentUser.id);
 
   const toggleEnroll = useCallback(async () => {
     try {
@@ -23,34 +24,28 @@ const useEnroll = ({ schedule, currentUser }: IUseEnroll) => {
       let request;
 
       if (isStudent()) {
-        request = () => axios.delete(`/api/schedule/${schedule.id}`);
+        request = () => axios.delete(`/api/schedule/${schedule.id}/enroll`);
       } else {
-        request = () => axios.put(`/api/schedule/${schedule.id}`);
+        request = () => axios.put(`/api/schedule/${schedule.id}/enroll`);
       }
 
-      await request()
-        .finally(() => {
-          setIsLoading(false);
-        });
+      await request().finally(() => {
+        setIsLoading(false);
+      });
 
       router.refresh();
-      toast.success('Success');
+      toast.success("Success");
     } catch (error) {
       setIsLoading(false);
-      toast.error('Something went wrong.');
-      router.push('/meetings');
+      toast.error("Something went wrong.");
+      router.push("/meetings");
     }
-  },
-    [
-      isStudent,
-      schedule,
-      router,
-    ]);
+  }, [isStudent, schedule, router]);
 
   return {
     toggleEnroll,
     isLoading,
-  }
-}
+  };
+};
 
 export default useEnroll;

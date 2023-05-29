@@ -5,9 +5,7 @@ import { createAgenda } from "@/app/actions/google/createAgenda";
 import { getGoogleOAuthToken } from "@/app/actions/google/getGoogleOAuthToken";
 import prisma from "@/app/libs/prismadb";
 
-export async function POST(
-  request: Request,
-) {
+export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -22,7 +20,7 @@ export async function POST(
     classLength,
     timezone,
     startDate,
-    endDate
+    endDate,
   } = body;
 
   Object.keys(body).forEach((value: any) => {
@@ -33,12 +31,13 @@ export async function POST(
 
   const { event } = await createAgenda({
     eventData: {
+      title,
       description: description,
       startDate,
-      endDate
+      endDate,
     },
-    googleUserAuth: await getGoogleOAuthToken(currentUser.id)
-  })
+    googleUserAuth: await getGoogleOAuthToken(currentUser.id),
+  });
 
   if (!event) {
     return NextResponse.error();
@@ -54,8 +53,8 @@ export async function POST(
       classLength,
       timezone,
       eventId: event.data.id as string,
-      userId: currentUser.id
-    }
+      userId: currentUser.id,
+    },
   });
 
   return NextResponse.json({});
