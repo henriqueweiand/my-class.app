@@ -64,6 +64,7 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
       category: data.category,
       classLength: StudentCount,
       timezone: 'UTF-8',
+      time: time.value,
       startDate: schedulingDate.format(),
       endDate: schedulingDate.add(1, 'hour').format(),
     })
@@ -73,6 +74,7 @@ const CreateClient: React.FC<ReservationsClientProps> = ({
       })
       .catch(() => {
         toast.error('Something went wrong.')
+        setIsLoading(false);
       })
   };
 

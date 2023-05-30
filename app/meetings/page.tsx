@@ -1,26 +1,28 @@
-
 import ClientOnly from "@/app/components/ClientOnly";
 import getSchedules from "../actions/schedule/getSchedules";
 import getCurrentUser from "../actions/user/getCurrentUser";
-import ClassesClient from "./ClassesClient";
+import ClassesClient from "./MettingsClient";
 
-const CreatePage = async () => {
+interface MeetingsPage {
+  searchParams: {
+    shift?: string;
+    day?: string;
+  }
+};
+
+const MeetingsPage = async ({ searchParams }: MeetingsPage) => {
   const currentUser = await getCurrentUser();
-  const classes = await getSchedules();
+  const schedules = await getSchedules(searchParams);
 
   if (!currentUser) {
-    return (
-      <ClientOnly>
-        Unauthorized, make login
-      </ClientOnly>
-    )
+    return <ClientOnly>Unauthorized, make login</ClientOnly>;
   }
 
   return (
     <ClientOnly>
-      <ClassesClient classes={classes} />
+      <ClassesClient schedules={schedules} />
     </ClientOnly>
   );
-}
+};
 
-export default CreatePage;
+export default MeetingsPage;

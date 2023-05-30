@@ -6,6 +6,9 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { deleteAgenda } from "@/app/actions/google/deleteAgenda";
 import { deleteSchedule } from "@/app/actions/schedule/deleteSchedule";
+import { updateSchedule } from "@/app/actions/schedule/updateSchedule";
+import { shiftNameByValue } from "@/app/actions/schedule/utils";
+import dayjs from "dayjs";
 
 interface IParams {
   id: string;
@@ -34,6 +37,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
     timezone,
     startDate,
     endDate,
+    time
   } = body;
 
   Object.keys(body).forEach((value: any) => {
@@ -61,19 +65,17 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
     return NextResponse.error();
   }
 
-  await prisma.schedule.update({
-    where: {
-      id: schedule.id,
-    },
-    data: {
-      title,
-      description,
-      startDate,
-      endDate,
-      category,
-      classLength,
-      timezone,
-    },
+  await updateSchedule({
+    id,
+    title,
+    description,
+    startDate,
+    endDate,
+    category,
+    classLength,
+    timezone,
+    day: dayjs(startDate).format('dddd').toLocaleLowerCase(),
+    shift: shiftNameByValue(time),
   });
 
   return NextResponse.json({

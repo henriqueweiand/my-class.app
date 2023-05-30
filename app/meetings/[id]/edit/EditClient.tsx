@@ -80,6 +80,7 @@ const EditClient: React.FC<ReservationsClientProps> = ({
         category: data.category,
         classLength: StudentCount,
         timezone: "UTF-8",
+        time: time.value,
         startDate: schedulingDate.format(),
         endDate: schedulingDate.add(1, "hour").format(),
       })

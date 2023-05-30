@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 
-import getCurrentUser from "@/app/actions/user/getCurrentUser";
 import { createAgenda } from "@/app/actions/google/createAgenda";
 import { getGoogleOAuthToken } from "@/app/actions/google/getGoogleOAuthToken";
-import prisma from "@/app/libs/prismadb";
+import { createSchedule } from "@/app/actions/schedule/createSchedule";
+import getCurrentUser from "@/app/actions/user/getCurrentUser";
+import { shiftNameByValue } from "@/app/actions/schedule/utils";
+import dayjs from "dayjs";
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
@@ -21,6 +23,7 @@ export async function POST(request: Request) {
     timezone,
     startDate,
     endDate,
+    time
   } = body;
 
   Object.keys(body).forEach((value: any) => {
@@ -43,19 +46,19 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
 
-  await prisma.schedule.create({
-    data: {
-      title,
-      description,
-      startDate,
-      endDate,
-      category,
-      classLength,
-      timezone,
-      eventId: event.data.id as string,
-      userId: currentUser.id,
-    },
-  });
+  await createSchedule({
+    title,
+    description,
+    startDate,
+    endDate,
+    category,
+    classLength,
+    timezone,
+    day: dayjs(startDate).format('dddd').toLocaleLowerCase(),
+    shift: shiftNameByValue(time),
+    eventId: event.data.id as string,
+    userId: currentUser.id,
+  })
 
   return NextResponse.json({});
 }
