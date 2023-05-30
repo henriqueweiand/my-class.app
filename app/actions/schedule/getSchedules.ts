@@ -1,12 +1,29 @@
 import prisma from "@/app/libs/prismadb";
 import dayjs from "dayjs";
 
-interface IParams { }
+interface getSchedulesProps {
+  shift?: string
+  day?: string
+}
 
-export default async function getSchedules(
-) {
+export default async function getSchedules({ shift, day }: getSchedulesProps) {
   try {
+    let query: any = {};
+
+    if (!!shift && shift !== 'null') {
+      if (shift !== 'all') {
+        query.shift = shift;
+      }
+    }
+
+    if (!!day && day !== 'null') {
+      if (day !== 'all') {
+        query.day = day;
+      }
+    }
+
     const schedules = await prisma.schedule.findMany({
+      where: query,
       orderBy: {
         createdAt: 'desc'
       },

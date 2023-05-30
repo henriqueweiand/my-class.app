@@ -49,6 +49,8 @@ model Schedule {
   title       String
   description String
   createdAt   DateTime @default(now())
+  shift       String
+  day         String
   startDate   DateTime
   endDate     DateTime
   category    String
