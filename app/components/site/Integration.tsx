@@ -23,7 +23,6 @@ const Integration = ({ }: Integration) => {
                     <p className="py-6">
                         Don't worry about more tools, just use the website to find a class and after that, you will only have to use your own calendar
                     </p>
-                    <button className="btn btn-primary">Get Started</button>
                 </div>
             </div>
         </div>

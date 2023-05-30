@@ -59,7 +59,7 @@ const LoginModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Input
+      {/* <Input
         id="email"
         label="Email"
         disabled={isLoading}
@@ -75,7 +75,7 @@ const LoginModal = () => {
         register={register}
         errors={errors}
         required
-      />
+      /> */}
     </div>
   )
 
