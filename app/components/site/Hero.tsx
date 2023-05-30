@@ -5,11 +5,13 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useMemo } from "react";
 import ScrollAnimationWrapper from "./ScrollAnimationWrapper";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 interface Hero { };
 
 const Hero = ({ }: Hero) => {
     const scrollAnimation = useMemo(() => getScrollAnimation(), []);
+    const registerModal = useRegisterModal();
 
     return (
         <ScrollAnimationWrapper
@@ -31,7 +33,7 @@ const Hero = ({ }: Hero) => {
                     <div>
                         <h1 className="text-5xl font-bold">My Class</h1>
                         <p className="py-6 text-1xl">The easiest way to have free and open meetings.</p>
-                        <button className="btn btn-primary">Get Started</button>
+                        <button className="btn btn-primary" onClick={registerModal.onOpen}>Get Started</button>
                     </div>
                 </div>
             </div>

@@ -54,13 +54,13 @@ const Modal: React.FC<ModalProps> = ({
           {
             footer && (
               <div className="w-full flex flex-col gap-4">
-                <Button
+                {/* <Button
                   outline
                   disabled={disabled}
                   label="Continue"
                   onClick={handleSubmit}
                 />
-                <hr />
+                <hr /> */}
                 {footer}
               </div>
             )
