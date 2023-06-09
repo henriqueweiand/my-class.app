@@ -1,38 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# my-class.app
 
-## Getting Started
+### Overview
+It is a simple project where you can create free open meetings and allow others enroll to your meeting. This project is totally integrated with Google Callendar. Example website https://www.my-class.app/
 
-First, run the development server:
+### Technologies
+- ReactJS
+- NextJS
+- Tailwind
+- Desisyui
+- Mongo
+- Prisma
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Running
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Install dependencies
+2. Copy .env.example to .env
+3. - Configure the OAuth consent screen - https://developers.google.com/workspace/guides/configure-oauth-consent
+4. - Use mongodb locally or https://www.mongodb.com/atlas/database
+5. Execute `yarn dev`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Preview
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+[![my-app preview](https://img.youtube.com/vi/Ymn6b1-GvHc/0.jpg)](https://www.youtube.com/watch?v=Ymn6b1-GvHc)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
